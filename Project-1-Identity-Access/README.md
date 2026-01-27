@@ -1,24 +1,28 @@
 # Identity and Access Management using Microsoft Entra ID
 
 ## Objective
-Implement user and group management in Microsoft Entra ID
-to support access control for Azure Virtual Desktop.
+Implement cloud-based identity and access management using
+Microsoft Entra ID to support secure user access.
 
 ## Technologies Used
 - Microsoft Entra ID
-- Azure Active Directory PowerShell
 - Microsoft Graph PowerShell
 
 ## Implementation
-- Created users in Microsoft Entra ID
-- Created security groups
-- Assigned users to groups
+- Created and managed users in Microsoft Entra ID
+- Created security groups and assigned users
 - Managed users and groups using PowerShell
+- Configured password reset policies
+- Enabled Self-Service Password Reset (SSPR)
+- Enabled Multi-Factor Authentication (MFA)
+- Configured custom domain name
 
 ## Validation
-- Verified users and groups in Entra ID portal
-- Confirmed group membership using PowerShell
+- Verified user and group creation in Entra ID portal
+- Confirmed MFA and SSPR functionality for users
+- Validated PowerShell-based identity management
 
 ## Learnings
-- Group-based access control for AVD
-- Basics of PowerShell automation for identity management
+- Cloud identity management concepts
+- Importance of MFA and SSPR for security
+- PowerShell automation for identity administration
