@@ -1,22 +1,32 @@
-# Infrastructure Projects
+# Azure Virtual Desktop inventory
 
-Hands-on training projects from my Infrastructure Analyst program, organized around identity, endpoint management, virtual desktops, virtualization, backup, and Linux administration. The repository originally began as Azure Virtual Desktop prerequisites; it now also indexes related infrastructure labs.
+Read-only Python tool for checking Azure Virtual Desktop resources in one subscription. It lists host pools, workspaces, application groups, and the number of session hosts in each host pool. It makes no changes to Azure.
 
-## Featured project pages
+## Requirements
 
-| Project | What I configured |
-| --- | --- |
-| [Azure Virtual Desktop](projects/azure-virtual-desktop/README.md) | Host pools, session hosts, workspaces, FSLogix, applications, and access controls |
-| [Intune and Entra ID](projects/intune-entra/README.md) | Autopilot, enrollment, compliance, applications, updates, and endpoint security |
-| [MECM and Windows deployment](projects/mecm-windows-deployment/README.md) | Primary site, boundaries, clients, task sequences, and Windows 11 deployment |
-| [VMware vSphere and Veeam](projects/vsphere-veeam/README.md) | Clusters, virtual networking, storage, backup jobs, and restores |
-| [RHEL and Ansible](projects/rhel-ansible/README.md) | Linux administration and multi-host configuration automation |
-| [Citrix Virtual Apps and Desktops](projects/citrix-virtual-apps-desktops/README.md) | Delivery components, catalogs, groups, PVS/MCS, and monitoring |
-| [Entra ID identity and access](Project-1-Identity-Access/README.md) | Users, groups, MFA, SSPR, and Microsoft Graph PowerShell |
-| [Windows Server and AD DS](Project-2-Windows-Server-and-Active-Directory/README.md) | Domain controller, DNS, organizational units, and users |
+- Python 3.9 or later
+- Azure CLI 2.55 or later with the `desktopvirtualization` extension
+- Reader access to the AVD resources in the selected subscription
 
-The project pages are reconstructed from my lab notes. They describe the work performed and identify missing exports or screenshots; they do not present recreated examples as original lab artifacts. Credentials and employer or client configurations are excluded.
+## Run
 
-See also my [Azure administrator exercises](https://github.com/Gurpreettoor04/AZ104-Labs), including an Azure network automation example and Azure SQL lab.
+```bash
+az login
+az extension add --name desktopvirtualization
+az account list -o table
+python3 inventory.py --subscription "<subscription-id>"
+```
 
-**Gurpreet Kaur Toor** · IT Administrator · [LinkedIn](https://www.linkedin.com/in/gurpreet-kaur-toor-1b5516144/)
+Use `--json` to print structured output. If you have no AVD resources, the summary shows zero resources. The script selects the requested subscription and verifies that selection before reading resources. It never retrieves registration tokens or user sessions.
+
+## Test without Azure
+
+```bash
+python3 -m unittest discover -s tests -v
+```
+
+The tests use a fake Azure CLI and sample response data. They verify the report logic and command selection. A live Azure run remains to be performed in your account.
+
+The project is inspired by my Azure Virtual Desktop training lab, where I configured host pools, workspaces, session hosts, applications, identity, and FSLogix. It is newly authored portfolio code and should not be mistaken for an export from that lab.
+
+Microsoft reference: [Azure CLI Desktop Virtualization commands](https://learn.microsoft.com/en-us/cli/azure/desktopvirtualization) and [Session Hosts REST list](https://learn.microsoft.com/en-us/rest/api/desktopvirtualization/session-hosts/list?view=rest-desktopvirtualization-2024-04-03).
